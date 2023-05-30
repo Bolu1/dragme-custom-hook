@@ -1,21 +1,50 @@
 import React, { useState } from "react";
 import useDragger from "../hooks/useDragger";
 import Slider from "./Slider";
+import ColorPicker from "./ColorPicker";
 
 const TextComponent: React.FC = (props: any) => {
   
   const [fontSize, setFontSize] = useState("40px")
   const [showMenu, setShowMenu] = useState(true);
-  const [height, setHeight] = useState("150px")
+  const [color, setColor] = useState("black")
   useDragger(`${props.index}`);
 
   return (
-    <div id={props.index} className="text">
+
+    <div 
+    onMouseEnter={() => {
+      setShowMenu(true);
+    }}
+    id={props.index}
+    className={`${
+      props.text != ""
+        ? "text left-0 cursor-move"
+        : "text right-0 cursor-move"
+    }`}
+    >
 
 
-{showMenu && (
+{showMenu && props.text != "" && (
         <div className="fixed right-0  w-[300px] h-[300px] bg-white drop-shadow-2xl p-2">
-          <div className=" flex justify-end">
+          <div className=" flex justify-between">
+
+          <svg
+            onClick={()=>{setShowMenu(false)}}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 z-10 cursor-pointer"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+
             <svg
             onClick={()=>{props.removeText(props.index)}}
               xmlns="http://www.w3.org/2000/svg"
@@ -41,11 +70,24 @@ const TextComponent: React.FC = (props: any) => {
             <Slider value={fontSize} action={setFontSize} min={40} max={200}/>
           </div>
 
-          <div>
+          <div className="mt-6">
             <p>
-              Height
+              Color
             </p>
-            <Slider value={height} action={setHeight}/>
+
+            <div className="grid grid-cols-2 px-2 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-2 ">
+
+            <ColorPicker setColor={setColor} color="red"/>
+            <ColorPicker setColor={setColor} color="pink"/>
+            <ColorPicker setColor={setColor} color="blue"/>
+            <ColorPicker setColor={setColor} color="black"/>
+            <ColorPicker setColor={setColor} color="green"/>
+            
+            <ColorPicker setColor={setColor} color="yellow"/>
+            <ColorPicker setColor={setColor} color="gray"/>
+            <ColorPicker setColor={setColor} color="cyan"/>
+
+            </div>
           </div>
 
           </div>
@@ -54,13 +96,14 @@ const TextComponent: React.FC = (props: any) => {
 
 
         <p 
-    style={{fontSize:fontSize}}
+    style={{fontSize:fontSize, color: color}}
         className=" font-bold cursor-move"
         >
           {props.text}
           </p>
         
     </div>
+
   )
 };
 

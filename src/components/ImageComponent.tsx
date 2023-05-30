@@ -5,35 +5,53 @@ import Slider from "./Slider";
 const ImageComponent: React.FC = (props: any) => {
   useDragger(`${props.index}`);
   const [showMenu, setShowMenu] = useState(true);
-  const [width, setWidth] = useState("150px")
-  const [height, setHeight] = useState("150px")
+  const [width, setWidth] = useState("150px");
+  const [height, setHeight] = useState("150px");
 
-  console.log(height, width)
+  console.log(height, width);
 
   return (
-    <div 
-    onMouseEnter={() => {
-      setShowMenu(true);
-    }}
-    onMouseLeave={() => {
-      setShowMenu(false);
-    }}
-    id={props.index} 
-    style={{width:width, height:height}}
-    className={`image cursor-move flex`}>
-
-
-{showMenu && (
+    <div
+      onMouseEnter={() => {
+        setShowMenu(true);
+      }}
+      // onMouseLeave={() => {
+      //   setShowMenu(false);
+      // }}
+      id={props.index}
+      style={{ width: width, height: height }}
+      className={`image cursor-move flex`}
+    >
+      {showMenu && (
         <div className="fixed right-0  w-[300px] h-[300px] bg-white drop-shadow-2xl p-2">
-          <div className=" flex justify-end">
+          <div className=" flex justify-between">
+
             <svg
-            onClick={()=>{props.removeImage(props.index)}}
+            onClick={()=>{setShowMenu(false)}}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6 text-red-600"
+              className="w-6 h-6 z-10 cursor-pointer"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+
+            <svg
+              onClick={() => {
+                props.removeImage(props.index);
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 text-red-600  cursor-pointer"
             >
               <path
                 strokeLinecap="round"
@@ -44,29 +62,20 @@ const ImageComponent: React.FC = (props: any) => {
           </div>
 
           <div>
-          <div>
-            <p>
-              Width
-            </p>
-            <Slider value={width} action={setWidth} min={150} max={500}/>
-          </div>
+            <div>
+              <p>Width</p>
+              <Slider value={width} action={setWidth} min={150} max={500} />
+            </div>
 
-          <div>
-            <p>
-              Height
-            </p>
-            <Slider value={height} action={setHeight} min={150} max={500}/>
-          </div>
-
+            <div>
+              <p>Height</p>
+              <Slider value={height} action={setHeight} min={150} max={500} />
+            </div>
           </div>
         </div>
       )}
 
-      <img
-        src={props.image}
-        className="cursor-move w-[100%] h-[100%]"
-      />
-
+      <img src={props.image} className="cursor-move w-[100%] h-[100%]" />
     </div>
   );
 };

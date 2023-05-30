@@ -11,7 +11,7 @@ import Navbar from "./layout/Navbar";
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [images, setImages] = useState([]);
-  const [text, setText] = useState([]);
+  const [text, setText] = useState([""]);
 
   const removeImage = (index: number) => {
       console.log(images)
@@ -43,7 +43,7 @@ function App() {
         text={text}
         setText={setText}
       />
-      <main className="bg-red-200">
+      <main className="bg-gray-200">
         <div className="container ">
           <Item />
           {/* <PinkBox />
